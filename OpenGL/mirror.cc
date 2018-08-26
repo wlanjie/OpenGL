@@ -1,18 +1,23 @@
 //
-// Created by wlanjie on 2018/3/20.
+//  mirror.cc
+//  OpenGL
+//
+//  Created by wlanjie on 2018/8/26.
+//  Copyright © 2018年 com.wlanjie.opengl. All rights reserved.
 //
 
-#include "image.h"
+
+#include "mirror.h"
 #include "stb_image.h"
 
-Image::Image(const char* filename, bool smoothlyScaleOutput) {
+Mirror::Mirror(const char* filename) {
     shader = new ShaderProgram(defaultVertexShader, defaultFragmentShader);
-
+    
     int nrChannels;
     stbi_set_flip_vertically_on_load(true);
     unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
     printf("width = %d height = %d\n", width, height);
-
+    
     glGenTextures(1, &textureId);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
@@ -22,8 +27,8 @@ Image::Image(const char* filename, bool smoothlyScaleOutput) {
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
-//    glBindTexture(GL_TEXTURE_2D, 0);
-
+    //    glBindTexture(GL_TEXTURE_2D, 0);
+    
     glGenFramebuffers(1, &frameBufferId);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
     glActiveTexture(GL_TEXTURE0);
@@ -34,7 +39,7 @@ Image::Image(const char* filename, bool smoothlyScaleOutput) {
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
-
+    
     int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (status != GL_FRAMEBUFFER_COMPLETE) {
         printf("frame buffer error\n");
@@ -44,29 +49,29 @@ Image::Image(const char* filename, bool smoothlyScaleOutput) {
     stbi_image_free(data);
 }
 
-Image::~Image() {
+Mirror::~Mirror() {
     if (shader) {
         delete shader;
         shader = nullptr;
     }
-
+    
     glDeleteTextures(1, &textureId);
     glDeleteFramebuffers(1, &frameBufferId);
 }
 
-GLuint Image::processImage(bool synchronously) {
+GLuint Mirror::processImage() {
     shader->use();
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
+//    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
     glViewport(0, 0, width, height);
-//    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+    //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     auto positionAttribute = shader->attributeIndex("position");
-    glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), defaultVertexCoordinates);
+    glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), mirrorTriangleVertex);
     auto textureCoordinateAttribute = shader->attributeIndex("inputTextureCoordinate");
-    glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), defaultTextureCoordinate);
+    glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), mirrorTriangleTexture);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glDrawArrays(GL_TRIANGLES, 0, 24);
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return textureId;

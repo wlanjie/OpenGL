@@ -12,6 +12,7 @@
 		704988A92132D439002E1FDB /* image.cc in Sources */ = {isa = PBXBuildFile; fileRef = 704988A12132D439002E1FDB /* image.cc */; };
 		704988AA2132D439002E1FDB /* main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 704988A22132D439002E1FDB /* main.cc */; };
 		704988AB2132D439002E1FDB /* shader_program.cc in Sources */ = {isa = PBXBuildFile; fileRef = 704988A62132D439002E1FDB /* shader_program.cc */; };
+		704988B02132D91A002E1FDB /* mirror.cc in Sources */ = {isa = PBXBuildFile; fileRef = 704988AF2132D91A002E1FDB /* mirror.cc */; };
 		70EDF7B720BA6B4600EC9235 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70EDF7B620BA6B4600EC9235 /* OpenGL.framework */; };
 		70EDF7B920BA6E6900EC9235 /* libglfw.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70EDF7B820BA6E6900EC9235 /* libglfw.dylib */; };
 /* End PBXBuildFile section */
@@ -40,6 +41,8 @@
 		704988A42132D439002E1FDB /* shader_program.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shader_program.h; sourceTree = "<group>"; };
 		704988A52132D439002E1FDB /* image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image.h; sourceTree = "<group>"; };
 		704988A62132D439002E1FDB /* shader_program.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader_program.cc; sourceTree = "<group>"; };
+		704988AE2132D91A002E1FDB /* mirror.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mirror.h; sourceTree = "<group>"; };
+		704988AF2132D91A002E1FDB /* mirror.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mirror.cc; sourceTree = "<group>"; };
 		70EDF7AB20BA68EA00EC9235 /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		70EDF7B620BA6B4600EC9235 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		70EDF7B820BA6E6900EC9235 /* libglfw.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.dylib; path = glfw/lib/libglfw.dylib; sourceTree = "<group>"; };
@@ -89,6 +92,8 @@
 				704988A42132D439002E1FDB /* shader_program.h */,
 				704988A02132D439002E1FDB /* stb_image.cc */,
 				7049889F2132D439002E1FDB /* stb_image.h */,
+				704988AE2132D91A002E1FDB /* mirror.h */,
+				704988AF2132D91A002E1FDB /* mirror.cc */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 			files = (
 				704988AA2132D439002E1FDB /* main.cc in Sources */,
 				704988AB2132D439002E1FDB /* shader_program.cc in Sources */,
+				704988B02132D91A002E1FDB /* mirror.cc in Sources */,
 				704988A72132D439002E1FDB /* render_screen.cc in Sources */,
 				704988A82132D439002E1FDB /* stb_image.cc in Sources */,
 				704988A92132D439002E1FDB /* image.cc in Sources */,

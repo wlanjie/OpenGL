@@ -1,5 +1,6 @@
 #include <glfw3.h>
 #include "image.h"
+#include "mirror.h"
 #include "render_screen.h"
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
@@ -18,11 +19,11 @@ int main() {
     glfwSetKeyCallback(window, keyCallback);
     RenderScreen renderScreen;
 
-    Image image("/Users/wlanjie/Documents/OpenGL/resources/textures/test.jpg");
+    Mirror image("/Users/wlanjie/Documents/OpenGL/resources/textures/test.jpg");
     while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
-        int textureId = image.processImage(false);
-        renderScreen.draw(textureId);
+        int textureId = image.processImage();
+//        renderScreen.draw(textureId);
         glfwSwapBuffers(window);
     }
     glfwTerminate();
