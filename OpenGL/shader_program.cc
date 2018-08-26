@@ -1,10 +1,10 @@
 //
 // Created by wlanjie on 2018/3/18.
 //
+#include <OpenGL/OpenGL.h>
 #include <OpenGL/gl.h>
 #include <cstdlib>
 #include "shader_program.h"
-#include "opengl.h"
 
 void checkGlError(const char* op) {
     for (GLint error = glGetError(); error; error = glGetError()) {
@@ -139,16 +139,6 @@ void ShaderProgram::setValue(GLint value, const char* forUniform) {
     if (currentUniformIntValues[forUniform] != value) {
         glUniform1i(uniformAddress, value);
         currentUniformIntValues[forUniform] = value;
-    }
-}
-
-void ShaderProgram::setValue(Color *value, const char* forUniform) {
-    if (colorUniformUseFourComponents) {
-        GLfloat array[] = { value->getRed(), value->getGreen(), value->getBlue(), value->getAlpha() };
-        setValue(array, 4, forUniform);
-    } else {
-        GLfloat array[] = { value->getRed(), value->getGreen(), value->getBlue() };
-        setValue(array, 3, forUniform);
     }
 }
 

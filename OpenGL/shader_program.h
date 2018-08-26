@@ -5,11 +5,10 @@
 #ifndef OPENGL_SHADER_PROGRAM_H
 #define OPENGL_SHADER_PROGRAM_H
 
+#include <OpenGL/OpenGL.h>
+#include <OpenGL/OpenGL.h>
 #include <map>
 #include <string>
-#include "color.h"
-#include <OpenGL/OpenGL.h>
-
 class ShaderProgram {
 public:
     enum ShaderType {
@@ -25,7 +24,6 @@ public:
     void use();
     void setValue(GLfloat value, const char* forUniform);
     void setValue(GLint value, const char* forUniform);
-    void setValue(Color* value, const char* forUniform);
     void setValue(GLfloat* value, int size, const char* forUniform);
     void setMatrix(GLfloat* value, int size, const char* forUniform);
     void setColorUniformUseFourComponents(bool colorUniformUseFourComponents) {
