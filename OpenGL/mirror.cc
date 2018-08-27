@@ -10,29 +10,15 @@
 #include "mirror.h"
 #include "stb_image.h"
 
-Mirror::Mirror(const char* filename) {
+Mirror::Mirror(int width, int height) {
+    this->width = width;
+    this->height = height;
     shader = new ShaderProgram(defaultVertexShader, defaultFragmentShader);
     
-    int nrChannels;
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
-    printf("width = %d height = %d\n", width, height);
-    
     glGenTextures(1, &textureId);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, textureId);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    //    glBindTexture(GL_TEXTURE_2D, 0);
-    
     glGenFramebuffers(1, &frameBufferId);
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
-    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -46,7 +32,7 @@ Mirror::Mirror(const char* filename) {
     }
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    stbi_image_free(data);
+
 }
 
 Mirror::~Mirror() {
@@ -59,11 +45,11 @@ Mirror::~Mirror() {
     glDeleteFramebuffers(1, &frameBufferId);
 }
 
-GLuint Mirror::processImage() {
+GLuint Mirror::processImage(GLuint textureId) {
     shader->use();
-//    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
     glViewport(0, 0, width, height);
-    //    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
     //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     auto positionAttribute = shader->attributeIndex("position");
     glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), mirrorTriangleVertex);
@@ -74,5 +60,5 @@ GLuint Mirror::processImage() {
     glDrawArrays(GL_TRIANGLES, 0, 24);
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    return textureId;
+    return this->textureId;
 }

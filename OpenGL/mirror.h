@@ -16,9 +16,9 @@
 
 class Mirror {
 public:
-    Mirror(const char* filename);
+    Mirror(int width, int height);
     ~Mirror();
-    GLuint processImage();
+    GLuint processImage(GLuint textureId);
 private:
     ShaderProgram* shader;
     GLuint textureId;

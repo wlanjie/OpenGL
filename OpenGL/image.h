@@ -10,9 +10,9 @@
 
 class Image {
 public:
-    Image(const char* filename, bool smoothlyScaleOutput = false);
+    Image(int width, int height);
     ~Image();
-    GLuint processImage(bool synchronously = false);
+    GLuint processImage(int textureId);
 
 private:
     ShaderProgram* shader;
