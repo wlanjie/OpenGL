@@ -107,7 +107,7 @@ GLint ShaderProgram::uniformIndex(const char* uniform) {
     if (uniformAddress) {
         return uniformAddress;
     } else {
-        uniformAddress = static_cast<GLuint>(glGetAttribLocation(program, uniform));
+        uniformAddress = static_cast<GLuint>(glGetUniformLocation(program, uniform));
         if (uniformAddress < 0) {
             return 0;
         }

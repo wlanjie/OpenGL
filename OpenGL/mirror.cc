@@ -52,12 +52,12 @@ GLuint Mirror::processImage(GLuint textureId) {
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
     //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     auto positionAttribute = shader->attributeIndex("position");
-    glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), mirrorTriangleVertex);
+    glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), mirrorVertexVTwo);
     auto textureCoordinateAttribute = shader->attributeIndex("inputTextureCoordinate");
-    glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), mirrorTriangleTexture);
+    glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), mirrorTextureVTwo);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
-    glDrawArrays(GL_TRIANGLES, 0, 24);
+    glDrawArrays(GL_TRIANGLES, 0, 12);
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return this->textureId;

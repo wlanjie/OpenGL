@@ -1,13 +1,17 @@
 //
-// Created by wlanjie on 2018/3/20.
+//  scale.cc
+//  OpenGL
+//
+//  Created by wlanjie on 2018/8/27.
+//  Copyright © 2018年 com.wlanjie.opengl. All rights reserved.
 //
 
-#include "image.h"
+#include "scale.h"
 
-Image::Image(int width, int height) {
+Scale::Scale(int width, int height) {
     this->width = width;
     this->height = height;
-    shader = new ShaderProgram(defaultVertexShader, defaultFragmentShader);
+    shader = new ShaderProgram(defaultVertexShader, scaleFragmentShader);
     
     glGenTextures(1, &textureId);
     glGenFramebuffers(1, &frameBufferId);
@@ -28,17 +32,17 @@ Image::Image(int width, int height) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-Image::~Image() {
+Scale::~Scale() {
     if (shader) {
         delete shader;
         shader = nullptr;
     }
-
+    
     glDeleteTextures(1, &textureId);
     glDeleteFramebuffers(1, &frameBufferId);
 }
 
-GLuint Image::processImage(int textureId) {
+GLuint Scale::processImage(int textureId) {
     shader->use();
     glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
     glViewport(0, 0, width, height);
