@@ -10,6 +10,8 @@
 #include "color.h"
 #include "soul_out.h"
 #include "shake.h"
+#include "flash_white.h"
+#include "glitch_filter.h"
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
     if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -32,7 +34,8 @@ int main() {
     int width;
     int height;
     GLuint textureId;
-    unsigned char *data = stbi_load("/Users/wlanjie/Documents/OpenGL/resources/textures/meinv.jpg", &width, &height, &nrChannels, 0);
+    
+    unsigned char *data = stbi_load("/Users/wlanjie/project/OpenGL/resources/textures/keyboard.jpg", &width, &height, &nrChannels, 0);
     printf("width = %d height = %d\n", width, height);
     
     glGenTextures(1, &textureId);
@@ -47,7 +50,7 @@ int main() {
     glBindTexture(GL_TEXTURE_2D, 0);
     stbi_image_free(data);
     
-    Shake image(width, height);
+    GlitchFilter image(width, height);
     while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
         int frameBufferTextureId = image.processImage(textureId);

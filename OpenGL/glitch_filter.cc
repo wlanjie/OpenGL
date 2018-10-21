@@ -1,26 +1,58 @@
 //
-//  shake.cc
+//  glitch_filter.cc
 //  OpenGL
 //
-//  Created by wlanjie on 2018/10/19.
+//  Created by wlanjie on 2018/10/20.
 //  Copyright © 2018年 com.wlanjie.opengl. All rights reserved.
 //
 
+#include "glitch_filter.h"
 #define GLM_ENABLE_EXPERIMENTAL
-
-#include "shake.h"
 #include <transform.hpp>
 #include <type_ptr.hpp>
 
-#define MAX_FRAMES 38
+#define MAX_FRAMES 8
 #define SKIP_FRAMES 19
 
-Shake::Shake(int width, int height) {
+GlitchFilter::GlitchFilter(int width, int height) {
     this->width = width;
     this->height = height;
     frames = 0;
     progress = 0;
-    shader = new ShaderProgram(defaultVertexMatrixShader, shakeFragmentShader);
+    driftSequence = new float[MAX_FRAMES];
+    driftSequence[0] = 0.0f;
+    driftSequence[1] = 0.03f;
+    driftSequence[2] = 0.032f;
+    driftSequence[3] = 0.035f;
+    driftSequence[4] = 0.03f;
+    driftSequence[5] = 0.032f;
+    driftSequence[6] = 0.031f;
+    driftSequence[7] = 0.029f;
+    driftSequence[8] = 0.025f;
+    
+    jitterSequence = new float[MAX_FRAMES];
+    jitterSequence[0] = 0.0f;
+    jitterSequence[1] = 0.03f;
+    jitterSequence[2] = 0.01f;
+    jitterSequence[3] = 0.02f;
+    jitterSequence[4] = 0.05f;
+    jitterSequence[5] = 0.055f;
+    jitterSequence[6] = 0.03f;
+    jitterSequence[7] = 0.02f;
+    jitterSequence[7] = 0.025f;
+    
+    threshHoldSequence = new float[MAX_FRAMES];
+    threshHoldSequence[0] = 1.0f;
+    threshHoldSequence[1] = 0.965f;
+    threshHoldSequence[2] = 0.9f;
+    threshHoldSequence[3] = 0.9f;
+    threshHoldSequence[4] = 0.9f;
+    threshHoldSequence[5] = 0.6f;
+    threshHoldSequence[6] = 0.8f;
+    threshHoldSequence[7] = 0.5f;
+    threshHoldSequence[8] = 0.5f;
+    
+    shader = new ShaderProgram(defaultVertexShader, glitchFilterFragmentShader);
     
     glGenTextures(1, &textureId);
     glGenFramebuffers(1, &frameBufferId);
@@ -41,7 +73,7 @@ Shake::Shake(int width, int height) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-Shake::~Shake() {
+GlitchFilter::~GlitchFilter() {
     if (shader) {
         delete shader;
         shader = nullptr;
@@ -51,19 +83,8 @@ Shake::~Shake() {
     glDeleteFramebuffers(1, &frameBufferId);
 }
 
-GLuint Shake::processImage(int textureId) {
+GLuint GlitchFilter::processImage(int textureId) {
     shader->use();
-    
-    progress = (float) frames / MAX_FRAMES;
-    if (progress > 1) {
-        progress = 0;
-    }
-    frames++;
-    if (frames > MAX_FRAMES + SKIP_FRAMES) {
-        frames = 0;
-    }
-    float scale = 1.0f + 0.2f * progress;
-    glm::mat4 scaleMatrix = glm::scale(glm::vec3(scale, scale, 1.0f));
     
     glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
     glViewport(0, 0, width, height);
@@ -73,12 +94,16 @@ GLuint Shake::processImage(int textureId) {
     glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), defaultVertexCoordinates);
     auto textureCoordinateAttribute = shader->attributeIndex("inputTextureCoordinate");
     glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), defaultTextureCoordinate);
-    auto mvpMatrixUniform = shader->uniformIndex("mvpMatrix");
+
+    frames++;
+    if (frames > MAX_FRAMES) {
+        frames = 0;
+    }
+    auto driftUniform = shader->uniformIndex("colorDrift");
+    glUniform1f(driftUniform, driftSequence[frames]);
+    auto jitterUniform = shader->uniformIndex("scanLineJitter");
+    glUniform2fv(jitterUniform, 1, new float[2]{jitterSequence[frames], threshHoldSequence[frames]});
     
-    glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(scaleMatrix));
-    auto offsetUniform = shader->uniformIndex("textureCoordinateOffset");
-    printf("progress = %f\n", 0.01 * progress);
-    glUniform1f(offsetUniform, 0.01f * progress);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -86,3 +111,4 @@ GLuint Shake::processImage(int textureId) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return this->textureId;
 }
+

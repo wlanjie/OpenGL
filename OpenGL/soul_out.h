@@ -25,6 +25,8 @@ private:
     GLuint frameBufferId;
     int width;
     int height;
+    float progress;
+    int frames;
 };
 
 #endif /* soul_out_h */

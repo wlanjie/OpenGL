@@ -24,6 +24,10 @@ private:
     GLuint frameBufferId;
     int width;
     int height;
+    float progress;
+    int frames;
+    float scale;
+    bool maxScale;
 };
 
 #endif /* scale_h */

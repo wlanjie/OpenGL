@@ -1,4 +1,14 @@
 //
+//  flash_white.cc
+//  OpenGL
+//
+//  Created by wlanjie on 2018/10/20.
+//  Copyright © 2018年 com.wlanjie.opengl. All rights reserved.
+//
+
+#include "flash_white.h"
+
+//
 //  shake.cc
 //  OpenGL
 //
@@ -15,12 +25,12 @@
 #define MAX_FRAMES 38
 #define SKIP_FRAMES 19
 
-Shake::Shake(int width, int height) {
+FlashWhite::FlashWhite(int width, int height) {
     this->width = width;
     this->height = height;
     frames = 0;
     progress = 0;
-    shader = new ShaderProgram(defaultVertexMatrixShader, shakeFragmentShader);
+    shader = new ShaderProgram(defaultVertexShader, flashWriteFragmentShader);
     
     glGenTextures(1, &textureId);
     glGenFramebuffers(1, &frameBufferId);
@@ -41,7 +51,7 @@ Shake::Shake(int width, int height) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-Shake::~Shake() {
+FlashWhite::~FlashWhite() {
     if (shader) {
         delete shader;
         shader = nullptr;
@@ -51,15 +61,20 @@ Shake::~Shake() {
     glDeleteFramebuffers(1, &frameBufferId);
 }
 
-GLuint Shake::processImage(int textureId) {
+GLuint FlashWhite::processImage(int textureId) {
     shader->use();
     
+    if (frames <= MAX_FRAMES) {
+        progress = frames * 1.0f / MAX_FRAMES;
+    } else {
+        progress = 2.0f - frames * 1.0f / MAX_FRAMES;
+    }
     progress = (float) frames / MAX_FRAMES;
     if (progress > 1) {
         progress = 0;
     }
     frames++;
-    if (frames > MAX_FRAMES + SKIP_FRAMES) {
+    if (frames > MAX_FRAMES) {
         frames = 0;
     }
     float scale = 1.0f + 0.2f * progress;
@@ -75,10 +90,10 @@ GLuint Shake::processImage(int textureId) {
     glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), defaultTextureCoordinate);
     auto mvpMatrixUniform = shader->uniformIndex("mvpMatrix");
     
-    glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(scaleMatrix));
-    auto offsetUniform = shader->uniformIndex("textureCoordinateOffset");
-    printf("progress = %f\n", 0.01 * progress);
-    glUniform1f(offsetUniform, 0.01f * progress);
+//    glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(scaleMatrix));
+    auto offsetUniform = shader->uniformIndex("exposureColor");
+    glUniform1f(offsetUniform, progress);
+    printf("progress = %f\n", progress);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -86,3 +101,4 @@ GLuint Shake::processImage(int textureId) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return this->textureId;
 }
+

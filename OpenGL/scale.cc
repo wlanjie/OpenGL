@@ -7,11 +7,23 @@
 //
 
 #include "scale.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <transform.hpp>
+#include <type_ptr.hpp>
+
+
+#define MAX_FRAMES 60
+#define SKIP_FRAMES 30
+#define MAX_SCALE 1.5
 
 Scale::Scale(int width, int height) {
     this->width = width;
     this->height = height;
-    shader = new ShaderProgram(defaultVertexShader, scaleFragmentShader);
+    progress = 0;
+    frames = 0;
+    scale = 1.0;
+    maxScale = false;
+    shader = new ShaderProgram(defaultVertexMatrixShader, defaultFragmentShader);
     
     glGenTextures(1, &textureId);
     glGenFramebuffers(1, &frameBufferId);
@@ -52,6 +64,34 @@ GLuint Scale::processImage(int textureId) {
     glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), defaultVertexCoordinates);
     auto textureCoordinateAttribute = shader->attributeIndex("inputTextureCoordinate");
     glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), defaultTextureCoordinate);
+    auto scaleUniform = shader->uniformIndex("scale");
+
+    if (frames <= MAX_FRAMES) {
+        progress = frames * 1.0 / SKIP_FRAMES;
+    } else {
+        progress = 2.0 - frames * 1.0 / SKIP_FRAMES;
+    }
+    
+    scale = 1.0f + 0.3f * progress;
+    glm::mat4 scaleMatrix = glm::scale(glm::vec3(scale, scale, scale));
+    printf("scale = %f progress = %f\n", scale, progress);
+    
+    auto mvpMatrixUniform = shader->uniformIndex("mvpMatrix");
+    glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(scaleMatrix));
+   
+    if (maxScale) {
+        frames--;
+        if (frames < 0) {
+            frames = 0;
+            maxScale = false;
+        }
+    } else {
+         frames++;
+        if (frames >= MAX_FRAMES) {
+            maxScale = true;
+        }
+    }
+    
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

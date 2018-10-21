@@ -41,9 +41,9 @@ static const char* defaultFragmentShader =
 static const char* scaleFragmentShader =
     "varying vec2 textureCoordinate;\n"
     "uniform sampler2D inputImageTexture;\n"
+    "uniform float scale;\n"
     "void main() {\n"
-    "   vec2 offset = vec2(0.05, 0.05);\n"
-    "   float scale = 1.1;\n"
+    "   vec2 offset = vec2(0.0, 0.0);\n"
     "   vec2 coordinate;\n"
     "   coordinate.x = (textureCoordinate.x - offset.x) / scale;\n"
     "   coordinate.y = (textureCoordinate.y - offset.y) / scale;\n"
@@ -52,7 +52,12 @@ static const char* scaleFragmentShader =
     "}\n";
 
 static const char* soulOutFragmentShader =
-    "";
+    "varying vec2 textureCoordinate;\n"
+    "uniform sampler2D inputImageTexture;\n"
+    "uniform float alpha;\n"
+    "void main() {\n"
+    "   gl_FragColor = vec4(texture2D(inputImageTexture, textureCoordinate).rgb, alpha);\n"
+    "}";
 
 static const char* shakeFragmentShader =
     "varying vec2 textureCoordinate;\n"
@@ -60,9 +65,38 @@ static const char* shakeFragmentShader =
     "uniform float textureCoordinateOffset;\n"
     "void main() {\n"
     "   vec4 blue = texture2D(inputImageTexture, textureCoordinate);\n"
-    "   vec4 green = texture2D(inputImageTexture, vec2(textureCoordinate.x, textureCoordinate.y + textureCoordinateOffset));"
+    "   vec4 green = texture2D(inputImageTexture, vec2(textureCoordinate.x + textureCoordinateOffset, textureCoordinate.y + textureCoordinateOffset));"
     "   vec4 red = texture2D(inputImageTexture, vec2(textureCoordinate.x - textureCoordinateOffset, textureCoordinate.y - textureCoordinateOffset));"
-    "   gl_FragColor = vec4(red.x, green.y, blue.z, blue.w);"
+    "   gl_FragColor = vec4(red.r, green.g, blue.b, blue.a);"
+    "}";
+
+static const char* flashWriteFragmentShader =
+    "varying vec2 textureCoordinate;\n"
+    "uniform sampler2D inputImageTexture;\n"
+    "uniform float exposureColor;\n"
+    "void main() {\n"
+    "   vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);\n"
+    "   gl_FragColor = vec4(textureColor.r + exposureColor, textureColor.g + exposureColor, textureColor.b + exposureColor, textureColor.a);\n"
+    "}\n";
+
+static const char* glitchFilterFragmentShader =
+    "varying vec2 textureCoordinate;\n"
+    "uniform sampler2D inputImageTexture;\n"
+    "uniform vec2 scanLineJitter;\n"
+    "uniform float colorDrift;\n"
+    "float rand(float x, float y) {\n"
+    "   return fract(sin(dot(vec2(x, y), vec2(12.9898, 78.233))) * 43758.5453);\n"
+    "}\n"
+    "void main() {;\n"
+    "   float x = textureCoordinate.x;\n"
+    "   float y = textureCoordinate.y;\n"
+    "   float jitter = rand(y, 0.0) * 2.0 - 1.0;\n"
+    "   float drift = colorDrift;\n"
+    "   float offsetParam = step(scanLineJitter.y, abs(jitter));\n"
+    "   jitter = jitter * offsetParam * scanLineJitter.x;\n"
+    "   vec4 color1 = texture2D(inputImageTexture, fract(vec2(x + jitter, y)));\n"
+    "   vec4 color2 = texture2D(inputImageTexture, fract(vec2(x + jitter + y * drift, y)));\n"
+    "   gl_FragColor = vec4(color1.r, color2.g, color1.b, 1.0);\n"
     "}";
 
 static const GLfloat defaultVertexCoordinates[] = {

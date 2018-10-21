@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		701470D52133C5C500480F34 /* scale.cc in Sources */ = {isa = PBXBuildFile; fileRef = 701470D32133C5C500480F34 /* scale.cc */; };
+		701ED8AA217B0047008B2194 /* flash_white.cc in Sources */ = {isa = PBXBuildFile; fileRef = 701ED8A9217B0047008B2194 /* flash_white.cc */; };
+		701ED8AD217B3894008B2194 /* glitch_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 701ED8AC217B3894008B2194 /* glitch_filter.cc */; };
 		704988A72132D439002E1FDB /* render_screen.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7049889E2132D439002E1FDB /* render_screen.cc */; };
 		704988A82132D439002E1FDB /* stb_image.cc in Sources */ = {isa = PBXBuildFile; fileRef = 704988A02132D439002E1FDB /* stb_image.cc */; };
 		704988A92132D439002E1FDB /* image.cc in Sources */ = {isa = PBXBuildFile; fileRef = 704988A12132D439002E1FDB /* image.cc */; };
@@ -36,6 +38,10 @@
 /* Begin PBXFileReference section */
 		701470D32133C5C500480F34 /* scale.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scale.cc; sourceTree = "<group>"; };
 		701470D42133C5C500480F34 /* scale.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scale.h; sourceTree = "<group>"; };
+		701ED8A8217B0047008B2194 /* flash_white.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = flash_white.h; sourceTree = "<group>"; };
+		701ED8A9217B0047008B2194 /* flash_white.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = flash_white.cc; sourceTree = "<group>"; };
+		701ED8AB217B3894008B2194 /* glitch_filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glitch_filter.h; sourceTree = "<group>"; };
+		701ED8AC217B3894008B2194 /* glitch_filter.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = glitch_filter.cc; sourceTree = "<group>"; };
 		7049889C2132D439002E1FDB /* opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opengl.h; sourceTree = "<group>"; };
 		7049889D2132D439002E1FDB /* filesystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filesystem.h; sourceTree = "<group>"; };
 		7049889E2132D439002E1FDB /* render_screen.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_screen.cc; sourceTree = "<group>"; };
@@ -114,6 +120,10 @@
 				70523461215CA945000D7DF2 /* soul_out.h */,
 				706BBD4C2179D9C400415ADC /* shake.cc */,
 				706BBD4D2179D9C400415ADC /* shake.h */,
+				701ED8A8217B0047008B2194 /* flash_white.h */,
+				701ED8A9217B0047008B2194 /* flash_white.cc */,
+				701ED8AB217B3894008B2194 /* glitch_filter.h */,
+				701ED8AC217B3894008B2194 /* glitch_filter.cc */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -188,8 +198,10 @@
 				704988AB2132D439002E1FDB /* shader_program.cc in Sources */,
 				701470D52133C5C500480F34 /* scale.cc in Sources */,
 				708B58452147E8E8000F2570 /* color.cc in Sources */,
+				701ED8AD217B3894008B2194 /* glitch_filter.cc in Sources */,
 				704988B02132D91A002E1FDB /* mirror.cc in Sources */,
 				70523462215CA945000D7DF2 /* soul_out.cc in Sources */,
+				701ED8AA217B0047008B2194 /* flash_white.cc in Sources */,
 				706BBD4E2179D9C400415ADC /* shake.cc in Sources */,
 				704988A72132D439002E1FDB /* render_screen.cc in Sources */,
 				704988A82132D439002E1FDB /* stb_image.cc in Sources */,
