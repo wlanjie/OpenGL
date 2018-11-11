@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <glfw3.h>
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl.h>
@@ -12,6 +13,7 @@
 #include "shake.h"
 #include "flash_white.h"
 #include "glitch_filter.h"
+#include "scale_shader.h"
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
     if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -50,12 +52,13 @@ int main() {
     glBindTexture(GL_TEXTURE_2D, 0);
     stbi_image_free(data);
     
-    GlitchFilter image(width, height);
+    ScaleShader image(width, height);
     while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
         int frameBufferTextureId = image.processImage(textureId);
         renderScreen.draw(frameBufferTextureId);
         glfwSwapBuffers(window);
+        usleep(20 * 1000);
     }
     glfwTerminate();
     return 0;

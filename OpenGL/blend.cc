@@ -1,21 +1,18 @@
 //
-//  shake.cc
+//  blend.cc
 //  OpenGL
 //
-//  Created by wlanjie on 2018/10/19.
+//  Created by wlanjie on 2018/10/27.
 //  Copyright © 2018年 com.wlanjie.opengl. All rights reserved.
 //
 
 #define GLM_ENABLE_EXPERIMENTAL
 
-#include "shake.h"
+#include "blend.h"
 #include <transform.hpp>
 #include <type_ptr.hpp>
 
-#define MAX_FRAMES 8
-#define SKIP_FRAMES 4
-
-Shake::Shake(int width, int height) {
+Blend::Blend(int width, int height) {
     this->width = width;
     this->height = height;
     frames = 0;
@@ -41,7 +38,7 @@ Shake::Shake(int width, int height) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-Shake::~Shake() {
+Blend::~Blend() {
     if (shader) {
         delete shader;
         shader = nullptr;
@@ -51,17 +48,9 @@ Shake::~Shake() {
     glDeleteFramebuffers(1, &frameBufferId);
 }
 
-GLuint Shake::processImage(int textureId) {
+GLuint Blend::processImage(int textureId) {
     shader->use();
-    
-    progress = (float) frames / MAX_FRAMES;
-    if (progress > 1) {
-        progress = 0;
-    }
-    frames++;
-    if (frames > MAX_FRAMES + SKIP_FRAMES) {
-        frames = 0;
-    }
+
     float scale = 1.0f + 0.2f * progress;
     glm::mat4 scaleMatrix = glm::scale(glm::vec3(scale, scale, 1.0f));
     

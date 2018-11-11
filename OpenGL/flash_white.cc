@@ -22,8 +22,8 @@
 #include <transform.hpp>
 #include <type_ptr.hpp>
 
-#define MAX_FRAMES 38
-#define SKIP_FRAMES 19
+#define MAX_FRAMES 8
+#define SKIP_FRAMES 4
 
 FlashWhite::FlashWhite(int width, int height) {
     this->width = width;
