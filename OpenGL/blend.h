@@ -23,6 +23,7 @@ protected:
 private:
     int frames;
     float progress;
+    GLuint blendTextureId;
 };
 
 #endif /* blend_h */

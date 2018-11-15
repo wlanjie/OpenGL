@@ -99,6 +99,17 @@ static const char* glitchFilterFragmentShader =
 "   gl_FragColor = vec4(color1.r, color2.g, color1.b, 1.0);\n"
 "}";
 
+static const char* blendFragmentShader =
+    "varying vec2 textureCoordinate;\n"
+    "uniform sampler2D inputImageTexture;\n"
+    "uniform sampler2D maskTexture;\n"
+    "uniform float strength;\n"
+    "void main() {\n"
+    "   float mask = (textureCoordinate.x < 1.0 - strength) ? 0.0 : 1.0;\n"
+    "   gl_FragColor = texture2D(inputImageTexture, textureCoordinate);\n"
+    "   gl_FragColor = mix(gl_FragColor, texture2D(maskTexture, textureCoordinate), mask);\n"
+    "}\n";
+
 static const GLfloat defaultVertexCoordinates[] = {
     -1.0f, -1.0f,
     1.0f, -1.0f,

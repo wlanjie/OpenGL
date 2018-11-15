@@ -52,10 +52,10 @@ GLuint OpenGL::processImage(GLuint textureId, const GLfloat* vertexCoordinate, c
     glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), textureCoordinate);
     auto uniformTexture = shader->uniformIndex("inputImageTexture");
     
-    runOnDrawTasks(shader->program);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
     glUniform1i(uniformTexture, 0);
+    runOnDrawTasks(shader->program);
     onDrawArrays();
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glDisableVertexAttribArray(positionAttribute);
