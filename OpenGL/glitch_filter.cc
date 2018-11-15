@@ -2,7 +2,7 @@
 //  glitch_filter.cc
 //  OpenGL
 //
-//  Created by wlanjie on 2018/10/20.
+//  Created by wlanjie on 2018/11/15.
 //  Copyright © 2018年 com.wlanjie.opengl. All rights reserved.
 //
 
@@ -10,13 +10,12 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <transform.hpp>
 #include <type_ptr.hpp>
+#include "shader.h"
 
 #define MAX_FRAMES 8
 #define SKIP_FRAMES 19
 
-GlitchFilter::GlitchFilter(int width, int height) {
-    this->width = width;
-    this->height = height;
+GlitchFilter::GlitchFilter(int width, int height) : OpenGL(width, height, defaultVertexShader, glitchFilterFragmentShader) {
     frames = 0;
     progress = 0;
     driftSequence = new float[MAX_FRAMES];
@@ -51,64 +50,29 @@ GlitchFilter::GlitchFilter(int width, int height) {
     threshHoldSequence[6] = 0.8f;
     threshHoldSequence[7] = 0.5f;
     threshHoldSequence[8] = 0.5f;
-    
-    shader = new ShaderProgram(defaultVertexShader, glitchFilterFragmentShader);
-    
-    glGenTextures(1, &textureId);
-    glGenFramebuffers(1, &frameBufferId);
-    glBindTexture(GL_TEXTURE_2D, textureId);
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
-    
-    int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    if (status != GL_FRAMEBUFFER_COMPLETE) {
-        printf("frame buffer error\n");
-    }
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 GlitchFilter::~GlitchFilter() {
-    if (shader) {
-        delete shader;
-        shader = nullptr;
-    }
-    
-    glDeleteTextures(1, &textureId);
-    glDeleteFramebuffers(1, &frameBufferId);
+    delete[] driftSequence;
+    delete[] jitterSequence;
+    delete[] threshHoldSequence;
 }
 
-GLuint GlitchFilter::processImage(int textureId) {
-    shader->use();
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
-    glViewport(0, 0, width, height);
-    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    auto positionAttribute = shader->attributeIndex("position");
-    glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), defaultVertexCoordinates);
-    auto textureCoordinateAttribute = shader->attributeIndex("inputTextureCoordinate");
-    glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), defaultTextureCoordinate);
-
+void GlitchFilter::runOnDrawTasks(GLuint programId) {
     frames++;
     if (frames > MAX_FRAMES) {
         frames = 0;
     }
-    auto driftUniform = shader->uniformIndex("colorDrift");
+    auto driftUniform = glGetUniformLocation(programId, "colorDrift");
     glUniform1f(driftUniform, driftSequence[frames]);
-    auto jitterUniform = shader->uniformIndex("scanLineJitter");
+    auto jitterUniform = glGetUniformLocation(programId, "scanLineJitter");
     glUniform2fv(jitterUniform, 1, new float[2]{jitterSequence[frames], threshHoldSequence[frames]});
-    
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, textureId);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    return this->textureId;
 }
 
+void GlitchFilter::onDrawArrays() {
+    
+}
+
+GLuint GlitchFilter::onDrawFrame(GLuint textureId) {
+    return processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+}

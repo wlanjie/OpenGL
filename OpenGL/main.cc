@@ -4,16 +4,18 @@
 #include <OpenGL/gl.h>
 #include <OpenGL/glext.h>
 #include "stb_image.h"
-#include "image.h"
-#include "mirror.h"
+
+//#include "mirror.h"
 #include "render_screen.h"
 #include "scale.h"
-#include "color.h"
-#include "soul_out.h"
+//#include "color.h"
+//#include "soul_out.h"
 #include "shake.h"
 #include "flash_white.h"
+#include "blend.h"
 #include "glitch_filter.h"
-#include "scale_shader.h"
+#include "sticker.h"
+//#include "scale_shader.h"
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
     if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -23,7 +25,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 
 int main() {
     glfwInit();
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "OpenGL", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(544, 960, "OpenGL", nullptr, nullptr);
     if(!window) {
         glfwTerminate();
     }
@@ -52,10 +54,10 @@ int main() {
     glBindTexture(GL_TEXTURE_2D, 0);
     stbi_image_free(data);
     
-    ScaleShader image(width, height);
+    Shake image(width, height);
     while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
-        int frameBufferTextureId = image.processImage(textureId);
+        int frameBufferTextureId = image.onDrawFrame(textureId);
         renderScreen.draw(frameBufferTextureId);
         glfwSwapBuffers(window);
         usleep(20 * 1000);

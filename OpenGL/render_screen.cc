@@ -9,7 +9,7 @@
 #include "render_screen.h"
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl.h>
-#include "opengl.h"
+#include "shader.h"
 
 RenderScreen::RenderScreen() {
     shader = new ShaderProgram(defaultVertexShader, defaultFragmentShader);
