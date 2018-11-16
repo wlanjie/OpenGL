@@ -15,6 +15,7 @@
 #include "blend.h"
 #include "glitch_filter.h"
 #include "sticker.h"
+#include "test.h"
 //#include "scale_shader.h"
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
@@ -39,7 +40,7 @@ int main() {
     int height;
     GLuint textureId;
     
-    unsigned char *data = stbi_load("/Users/wlanjie/project/OpenGL/resources/textures/keyboard.jpg", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("resources/textures/keyboard.jpg", &width, &height, &nrChannels, 0);
     printf("width = %d height = %d\n", width, height);
     
     glGenTextures(1, &textureId);
@@ -54,7 +55,7 @@ int main() {
     glBindTexture(GL_TEXTURE_2D, 0);
     stbi_image_free(data);
     
-    FlashWhite image(width, height);
+    Test image(width, height);
     while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
         int frameBufferTextureId = image.onDrawFrame(textureId);

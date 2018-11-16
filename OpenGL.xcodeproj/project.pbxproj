@@ -17,6 +17,7 @@
 		70C7BB57219D5FF00079EB77 /* glitch_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C7BB55219D5FF00079EB77 /* glitch_filter.cc */; };
 		70C7BB5A219D61610079EB77 /* scale.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C7BB58219D61610079EB77 /* scale.cc */; };
 		70C7BB68219E907F0079EB77 /* frame_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C7BB66219E907F0079EB77 /* frame_buffer.cc */; };
+		70C7BB6B219EB14B0079EB77 /* test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C7BB69219EB14B0079EB77 /* test.cc */; };
 		70EDF7B720BA6B4600EC9235 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70EDF7B620BA6B4600EC9235 /* OpenGL.framework */; };
 		70EDF7B920BA6E6900EC9235 /* libglfw.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70EDF7B820BA6E6900EC9235 /* libglfw.dylib */; };
 /* End PBXBuildFile section */
@@ -60,11 +61,11 @@
 		70C7BB60219E6BE00079EB77 /* vertex_shader.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertex_shader.vs; sourceTree = "<group>"; };
 		70C7BB61219E6C5C0079EB77 /* flash_white_fragment.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = flash_white_fragment.fs; sourceTree = "<group>"; };
 		70C7BB62219E6F4D0079EB77 /* fragment_shader.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fragment_shader.fs; sourceTree = "<group>"; };
-		70C7BB63219E701F0079EB77 /* vertex_shader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = vertex_shader.vs; sourceTree = "<group>"; };
-		70C7BB64219E70200079EB77 /* fragment_shader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = fragment_shader.fs; sourceTree = "<group>"; };
-		70C7BB65219E70200079EB77 /* flash_white_fragment.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = flash_white_fragment.fs; sourceTree = "<group>"; };
 		70C7BB66219E907F0079EB77 /* frame_buffer.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = frame_buffer.cc; sourceTree = "<group>"; };
 		70C7BB67219E907F0079EB77 /* frame_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = frame_buffer.h; sourceTree = "<group>"; };
+		70C7BB69219EB14B0079EB77 /* test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test.cc; sourceTree = "<group>"; };
+		70C7BB6A219EB14B0079EB77 /* test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
+		70C7BB6C219EB8990079EB77 /* test_fragment.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = test_fragment.fs; sourceTree = "<group>"; };
 		70EDF7AB20BA68EA00EC9235 /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		70EDF7B620BA6B4600EC9235 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		70EDF7B820BA6E6900EC9235 /* libglfw.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.dylib; path = glfw/lib/libglfw.dylib; sourceTree = "<group>"; };
@@ -89,6 +90,7 @@
 				70C7BB60219E6BE00079EB77 /* vertex_shader.vs */,
 				70C7BB61219E6C5C0079EB77 /* flash_white_fragment.fs */,
 				70C7BB62219E6F4D0079EB77 /* fragment_shader.fs */,
+				70C7BB6C219EB8990079EB77 /* test_fragment.fs */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -114,9 +116,6 @@
 		70EDF7AD20BA68EA00EC9235 /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
-				70C7BB65219E70200079EB77 /* flash_white_fragment.fs */,
-				70C7BB64219E70200079EB77 /* fragment_shader.fs */,
-				70C7BB63219E701F0079EB77 /* vertex_shader.vs */,
 				7049889D2132D439002E1FDB /* filesystem.h */,
 				704988A22132D439002E1FDB /* main.cc */,
 				7049889E2132D439002E1FDB /* render_screen.cc */,
@@ -142,6 +141,8 @@
 				70C7BB5C219D688F0079EB77 /* sticker.h */,
 				70C7BB66219E907F0079EB77 /* frame_buffer.cc */,
 				70C7BB67219E907F0079EB77 /* frame_buffer.h */,
+				70C7BB69219EB14B0079EB77 /* test.cc */,
+				70C7BB6A219EB14B0079EB77 /* test.h */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -218,6 +219,7 @@
 				70C7BB4D219D105D0079EB77 /* shake.cc in Sources */,
 				704988A72132D439002E1FDB /* render_screen.cc in Sources */,
 				70C7BB5A219D61610079EB77 /* scale.cc in Sources */,
+				70C7BB6B219EB14B0079EB77 /* test.cc in Sources */,
 				704988A82132D439002E1FDB /* stb_image.cc in Sources */,
 				70C7BB51219D5C650079EB77 /* flash_white.cc in Sources */,
 				70C7BB4A219C3B580079EB77 /* opengl.cc in Sources */,

@@ -9,6 +9,9 @@
 #include "opengl.h"
 #include "shader.h"
 #include <cstdlib>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
 void checkGlError(const char* op) {
     for (GLint error = glGetError(); error; error = glGetError()) {
@@ -34,11 +37,32 @@ void OpenGL::setOutput(int width, int height) {
 }
 
 void OpenGL::createProgram(const char* vertex, const char* fragment) {
+    std::string vertexCode;
+    std::string fragmentCode;
+    std::ifstream vertexShaderFile;
+    std::ifstream fragmentShaderFile;
+    vertexShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    fragmentShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    try {
+        vertexShaderFile.open(vertex);
+        fragmentShaderFile.open(fragment);
+        std::stringstream vertexStream;
+        std::stringstream fragmentStream;
+        vertexStream << vertexShaderFile.rdbuf();
+        fragmentStream << fragmentShaderFile.rdbuf();
+        vertexShaderFile.close();
+        fragmentShaderFile.close();
+        vertexCode = vertexStream.str();
+        fragmentCode = fragmentStream.str();
+    } catch (std::ifstream::failure e) {
+        
+    }
+    
     program = glCreateProgram();
     auto vertexShader = glCreateShader(GL_VERTEX_SHADER);
     auto fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    compileShader(vertex, vertexShader);
-    compileShader(fragment, fragmentShader);
+    compileShader(vertexCode.c_str(), vertexShader);
+    compileShader(fragmentCode.c_str(), fragmentShader);
     glAttachShader(program, vertexShader);
     checkGlError("glAttachVertexShader");
     glAttachShader(program, fragmentShader);

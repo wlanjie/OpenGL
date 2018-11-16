@@ -16,7 +16,7 @@
 #define MAX_FRAMES 8
 #define SKIP_FRAMES 4
 
-FlashWhite::FlashWhite(int width, int height) : FrameBuffer(width, height, defaultVertexShader, flashWriteFragmentShader) {
+FlashWhite::FlashWhite(int width, int height) : FrameBuffer(width, height, "shader/vertex_shader.vs", "shader/flash_white_fragment.fs") {
     progress = 0;
     frames = 0;
     setOutput(width, height);

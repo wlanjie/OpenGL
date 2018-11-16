@@ -11,7 +11,7 @@
 #include <OpenGL/gl.h>
 #include "shader.h"
 
-RenderScreen::RenderScreen() : OpenGL(defaultVertexShader, defaultFragmentShader) {
+RenderScreen::RenderScreen() : OpenGL("shader/vertex_shader.vs", "shader/fragment_shader.fs") {
 }
 
 RenderScreen::~RenderScreen() {
