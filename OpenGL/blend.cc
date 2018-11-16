@@ -42,7 +42,7 @@ Blend::~Blend() {
     
 }
 
-void Blend::runOnDrawTasks(GLuint programId) {
+void Blend::runOnDrawTasks() {
     if (frames >= MAX_FRAMS) {
         frames = 0;
     }
@@ -54,12 +54,10 @@ void Blend::runOnDrawTasks(GLuint programId) {
 //    auto offsetUniform = glGetUniformLocation(programId, "textureCoordinateOffset");
 //    printf("progress = %f\n", 0.01 * progress);
 //    glUniform1f(offsetUniform, 0.01f * progress);
-    auto strength = glGetUniformLocation(programId, "strength");
-    glUniform1f(strength, frames * 1.0f / MAX_FRAMS);
-    auto maskTexture = glGetUniformLocation(programId, "maskTexture");
+    setFloat("strength", frames * 1.0f / MAX_FRAMS);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, blendTextureId);
-    glUniform1i(maskTexture, 1);
+    setInt("maskTexture", 1);
     frames++;
 }
 
@@ -68,5 +66,6 @@ void Blend::onDrawArrays() {
 }
 
 GLuint Blend::onDrawFrame(GLuint textureId) {
-    return processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+    processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+    return 0;
 }

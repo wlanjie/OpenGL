@@ -9,15 +9,13 @@
 #ifndef render_screen_h
 #define render_screen_h
 
-#include "shader_program.h"
+#include "opengl.h"
 
-class RenderScreen {
+class RenderScreen : public OpenGL {
 public:
     RenderScreen();
     ~RenderScreen();
     void draw(int textureId);
-private:
-    ShaderProgram* shader;
 };
 
 #endif /* render_screen_h */

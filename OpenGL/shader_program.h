@@ -7,7 +7,6 @@
 
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/OpenGL.h>
-#include <map>
 #include <string>
 class ShaderProgram {
 public:
@@ -22,25 +21,20 @@ public:
     GLuint attributeIndex(const char* attribute);
     GLint uniformIndex(const char* uniform);
     void use();
-    void setValue(GLfloat value, const char* forUniform);
-    void setValue(GLint value, const char* forUniform);
-    void setValue(GLfloat* value, int size, const char* forUniform);
-    void setMatrix(GLfloat* value, int size, const char* forUniform);
-    void setColorUniformUseFourComponents(bool colorUniformUseFourComponents) {
-        this->colorUniformUseFourComponents = colorUniformUseFourComponents;
-    }
+    GLuint getProgram();
 
-public:
+    void setInt(const char* name, int value);
+    void setFloat(const char* name, float value);
+    void setFloatVec2(const char* name, int size, const GLfloat* value);
+    void setFloatVec3(const char* name, int size, const GLfloat* value);
+    void setFloatVec4(const char* name, int size, const GLfloat* value);
+    void setUnifromMatrix3f(const char* name, int size, const GLfloat* matrix);
+    void setUnifromMatrix4f(const char* name, int size, const GLfloat* matrix);
+private:
     GLuint program;
     GLuint vertexShader;
     GLuint fragmentShader;
     bool colorUniformUseFourComponents;
-
-    std::map<const char*, GLuint> attributeAddresses;
-    std::map<const char*, GLint> uniformAddresses;
-    std::map<const char*, GLint> currentUniformIntValues;
-    std::map<const char*, GLfloat> currentUniformFloatValues;
-    std::map<const char*, GLfloat*> currentUniformFloatArrayValues;
 
     GLuint compileShader(const char* shaderString, ShaderType type);
     void link();

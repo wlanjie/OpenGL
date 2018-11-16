@@ -7,60 +7,161 @@
 //
 
 #include "opengl.h"
+#include "shader.h"
+#include <cstdlib>
+
+void checkGlError(const char* op) {
+    for (GLint error = glGetError(); error; error = glGetError()) {
+        printf("after %s() glError (0x%x)\n", op, error);
+    }
+}
+
+OpenGL::OpenGL(const char* vertex, const char* fragment) {
+    this->width = 0;
+    this->height = 0;
+    createProgram(vertex, fragment);
+}
 
 OpenGL::OpenGL(int width, int height, const char* vertex, const char* fragment) {
     this->width = width;
     this->height = height;
-    shader = new ShaderProgram(vertex, fragment);
-    glGenTextures(1, &textureId);
-    glGenFramebuffers(1, &frameBufferId);
-    glBindTexture(GL_TEXTURE_2D, textureId);
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
-    
-    int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    if (status != GL_FRAMEBUFFER_COMPLETE) {
-        printf("frame buffer error\n");
-    }
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    createProgram(vertex, fragment);
+}
+
+void OpenGL::setOutput(int width, int height) {
+    this->width = width;
+    this->height = height;
+}
+
+void OpenGL::createProgram(const char* vertex, const char* fragment) {
+    program = glCreateProgram();
+    auto vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    auto fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    compileShader(vertex, vertexShader);
+    compileShader(fragment, fragmentShader);
+    glAttachShader(program, vertexShader);
+    checkGlError("glAttachVertexShader");
+    glAttachShader(program, fragmentShader);
+    checkGlError("glAttachVertexShader");
+    link();
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
 }
 
 OpenGL::~OpenGL() {
-    glDeleteTextures(1, &textureId);
-    glDeleteFramebuffers(1, &frameBufferId);
-    if (shader != nullptr) {
-        delete shader;
-        shader = nullptr;
+    if (program != 0) {
+        glDeleteProgram(program);
+        program = 0;
     }
 }
 
-GLuint OpenGL::processImage(GLuint textureId, const GLfloat* vertexCoordinate, const GLfloat* textureCoordinate) {
-    shader->use();
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
-    glViewport(0, 0, width, height);
+void OpenGL::runOnDrawTasks() {
+}
+
+void OpenGL::onDrawArrays() {
+    
+}
+
+void OpenGL::processImage(GLuint textureId) {
+    processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+}
+
+void OpenGL::processImage(GLuint textureId, const GLfloat* vertexCoordinate, const GLfloat* textureCoordinate) {
+    glUseProgram(program);
+    if (width > 0 && height > 0) {
+        glViewport(0, 0, width, height);
+    }
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    auto positionAttribute = shader->attributeIndex("position");
+    runOnDrawTasks();
+    auto positionAttribute = glGetAttribLocation(program, "position");
+    glEnableVertexAttribArray(positionAttribute);
     glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), vertexCoordinate);
-    auto textureCoordinateAttribute = shader->attributeIndex("inputTextureCoordinate");
+    auto textureCoordinateAttribute = glGetAttribLocation(program, "inputTextureCoordinate");
+    glEnableVertexAttribArray(textureCoordinateAttribute);
     glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), textureCoordinate);
-    auto uniformTexture = shader->uniformIndex("inputImageTexture");
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
-    glUniform1i(uniformTexture, 0);
-    runOnDrawTasks(shader->program);
+    setInt("inputImageTexture", 0);
     onDrawArrays();
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glDisableVertexAttribArray(positionAttribute);
     glDisableVertexAttribArray(textureCoordinateAttribute);
     glBindTexture(GL_TEXTURE_2D, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    return this->textureId;
+}
+
+void OpenGL::compileShader(const char *shaderString, GLuint shader) {
+    glShaderSource(shader, 1, &shaderString, nullptr);
+    glCompileShader(shader);
+    GLint compiled = GL_FALSE;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
+    if (!compiled) {
+        GLint infoLen;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);
+        if (infoLen) {
+            auto *buf = (char *) malloc((size_t) infoLen);
+            if (buf) {
+                glGetShaderInfoLog(shader, infoLen, nullptr, buf);
+                printf("Could not compile %d:\n%s\n", shader, buf);
+                free(buf);
+            }
+            glDeleteShader(shader);
+        }
+    }
+}
+
+void OpenGL::link() {
+    glLinkProgram(program);
+    GLint linkStatus = GL_FALSE;
+    glGetProgramiv(program, GL_LINK_STATUS, &linkStatus);
+    if (linkStatus == GL_FALSE) {
+        GLint infoLen;
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLen);
+        if (infoLen) {
+            auto *buf = (char *) malloc((size_t) infoLen);
+            if (buf) {
+                glGetProgramInfoLog(program, infoLen, nullptr, buf);
+                printf("%s", buf);
+                free(buf);
+            }
+            glDeleteProgram(program);
+            program = 0;
+        }
+    }
+}
+
+void OpenGL::setInt(const char* name, int value) {
+    auto location = glGetUniformLocation(program, name);
+    glUniform1i(location, value);
+}
+
+void OpenGL::setFloat(const char* name, float value) {
+    auto location = glGetUniformLocation(program, name);
+    glUniform1f(location, value);
+}
+
+void OpenGL::setFloatVec2(const char* name, int size, const GLfloat* value) {
+    auto location = glGetUniformLocation(program, name);
+    glUniform2fv(location, size, value);
+}
+
+void OpenGL::setFloatVec3(const char* name, int size, const GLfloat* value) {
+    auto location = glGetUniformLocation(program, name);
+    glUniform3fv(location, size, value);
+}
+
+void OpenGL::setFloatVec4(const char* name, int size, const GLfloat* value) {
+    auto location = glGetUniformLocation(program, name);
+    glUniform4fv(location, size, value);
+}
+
+void OpenGL::setUnifromMatrix3f(const char* name, int size, const GLfloat* matrix) {
+    auto location = glGetUniformLocation(program, name);
+    glUniformMatrix3fv(location, size, GL_FALSE, matrix);
+}
+
+void OpenGL::setUnifromMatrix4f(const char* name, int size, const GLfloat* matrix) {
+    auto location = glGetUniformLocation(program, name);
+    glUniformMatrix4fv(location, size, GL_FALSE, matrix);
 }

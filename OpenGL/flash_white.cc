@@ -16,16 +16,18 @@
 #define MAX_FRAMES 8
 #define SKIP_FRAMES 4
 
-FlashWhite::FlashWhite(int width, int height) : OpenGL(width, height, defaultVertexShader, flashWriteFragmentShader) {
+FlashWhite::FlashWhite(int width, int height) : FrameBuffer(width, height, defaultVertexShader, flashWriteFragmentShader) {
     progress = 0;
     frames = 0;
+    setOutput(width, height);
 }
 
 FlashWhite::~FlashWhite() {
     
 }
 
-void FlashWhite::runOnDrawTasks(GLuint programId) {
+void FlashWhite::runOnDrawTasks() {
+    FrameBuffer::runOnDrawTasks();
     if (frames <= MAX_FRAMES) {
         progress = frames * 1.0f / MAX_FRAMES;
     } else {
@@ -41,14 +43,9 @@ void FlashWhite::runOnDrawTasks(GLuint programId) {
     }
     float scale = 1.0f + 0.2f * progress;
     glm::mat4 scaleMatrix = glm::scale(glm::vec3(scale, scale, 1.0f));
-    auto offsetUniform = glGetUniformLocation(programId, "exposureColor");
-    glUniform1f(offsetUniform, progress);
-}
-
-void FlashWhite::onDrawArrays() {
-    
+    setFloat("exposureColor", progress);
 }
 
 GLuint FlashWhite::onDrawFrame(GLuint textureId) {
-    return processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+    return FrameBuffer::onDrawFrame(textureId);
 }

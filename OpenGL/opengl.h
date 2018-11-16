@@ -11,22 +11,33 @@
 
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl.h>
-#include "shader_program.h"
+#include <string>
 
 class OpenGL {
 public:
+    OpenGL(const char* vertex, const char* fragment);
     OpenGL(int width, int height, const char* vertex, const char* fragment);
     ~OpenGL();
-    
+    void setOutput(int width, int height);
+    void setInt(const char* name, int value);
+    void setFloat(const char* name, float value);
+    void setFloatVec2(const char* name, int size, const GLfloat* value);
+    void setFloatVec3(const char* name, int size, const GLfloat* value);
+    void setFloatVec4(const char* name, int size, const GLfloat* value);
+    void setUnifromMatrix3f(const char* name, int size, const GLfloat* matrix);
+    void setUnifromMatrix4f(const char* name, int size, const GLfloat* matrix);
 protected:
-    GLuint processImage(GLuint textureId, const GLfloat* vertexCoordinate, const GLfloat* textureCoordinate);
-    virtual void runOnDrawTasks(GLuint programId) = 0;
-    virtual void onDrawArrays() = 0;
+    void processImage(GLuint textureId);
+    void processImage(GLuint textureId, const GLfloat* vertexCoordinate, const GLfloat* textureCoordinate);
+    virtual void runOnDrawTasks();
+    virtual void onDrawArrays();
     
 private:
-    ShaderProgram* shader;
-    GLuint textureId;
-    GLuint frameBufferId;
+    void createProgram(const char* vertex, const char* fragment);
+    void compileShader(const char* shaderString, GLuint shader);
+    void link();
+private:
+    GLuint program;
     int width;
     int height;
 };

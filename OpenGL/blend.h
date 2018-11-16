@@ -18,7 +18,7 @@ public:
     
     GLuint onDrawFrame(GLuint textureId);
 protected:
-    virtual void runOnDrawTasks(GLuint programId) override;
+    virtual void runOnDrawTasks() override;
     virtual void onDrawArrays() override;
 private:
     int frames;

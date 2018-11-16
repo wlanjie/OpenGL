@@ -81,27 +81,27 @@ void Sticker::onDrawArrays() {
     
 }
 
-GLuint Sticker::onDrawFrame(GLuint textureId) {
-    auto id = processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
-    shader->use();
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
-    glViewport(0, 0, width, height);
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    auto positionAttribute = shader->attributeIndex("position");
-    glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), vertex);
-    auto textureCoordinateAttribute = shader->attributeIndex("inputTextureCoordinate");
-    glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), fragment);
-    auto uniformTexture = shader->uniformIndex("inputImageTexture");
-    
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, id);
-    glUniform1i(uniformTexture, 0);
-    
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    glDisableVertexAttribArray(positionAttribute);
-    glDisableVertexAttribArray(textureCoordinateAttribute);
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+GLuint Sticker::onDrawFrame() {
+//    processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+//    shader->use();
+//    glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
+//    glViewport(0, 0, width, height);
+//    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    auto positionAttribute = shader->attributeIndex("position");
+//    glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), vertex);
+//    auto textureCoordinateAttribute = shader->attributeIndex("inputTextureCoordinate");
+//    glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), fragment);
+//    auto uniformTexture = shader->uniformIndex("inputImageTexture");
+//    
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, 0);
+//    glUniform1i(uniformTexture, 0);
+//    
+//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+//    glDisableVertexAttribArray(positionAttribute);
+//    glDisableVertexAttribArray(textureCoordinateAttribute);
+//    glBindTexture(GL_TEXTURE_2D, 0);
+//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return this->textureId;
 }

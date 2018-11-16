@@ -27,9 +27,7 @@ Scale::~Scale() {
     
 }
 
-void Scale::runOnDrawTasks(GLuint programId) {
-    auto scaleUniform = glGetUniformLocation(programId, "scale");
-    
+void Scale::runOnDrawTasks() {
     if (frames <= MAX_FRAMES) {
         progress = frames * 1.0 / SKIP_FRAMES;
     } else {
@@ -38,11 +36,8 @@ void Scale::runOnDrawTasks(GLuint programId) {
     
     scale = 1.0f + 0.3f * progress;
     glm::mat4 scaleMatrix = glm::scale(glm::vec3(scale, scale, scale));
-    printf("scale = %f progress = %f\n", scale, progress);
     
-    auto mvpMatrixUniform = glGetUniformLocation(programId, "mvpMatrix");
-    glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(scaleMatrix));
-    
+    setUnifromMatrix4f("mvpMatrix", 1, glm::value_ptr(scaleMatrix));
     if (maxScale) {
         frames--;
         if (frames < 0) {
@@ -62,5 +57,6 @@ void Scale::onDrawArrays() {
 }
 
 GLuint Scale::onDrawFrame(GLuint textureId) {
-    return processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+    processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+    return 0;
 }

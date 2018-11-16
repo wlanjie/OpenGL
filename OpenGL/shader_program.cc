@@ -84,105 +84,43 @@ void ShaderProgram::link() {
     }
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
-
 }
 
-GLuint ShaderProgram::attributeIndex(const char* attribute) {
-    auto attributeAddress = attributeAddresses[attribute];
-//    if (attributeAddress) {
-//        return attributeAddress;
-//    } else {
-        attributeAddress = (GLuint) glGetAttribLocation(program, attribute);
-        if (attributeAddress < 0) {
-            return 0;
-        }
-        glEnableVertexAttribArray(attributeAddress);
-        attributeAddresses[attribute] = attributeAddress;
-        return attributeAddress;
-//    }
+GLuint ShaderProgram::getProgram() {
+    return program;
 }
 
-GLint ShaderProgram::uniformIndex(const char* uniform) {
-    auto uniformAddress = uniformAddresses[uniform];
-    if (uniformAddress) {
-        return uniformAddress;
-    } else {
-        uniformAddress = static_cast<GLuint>(glGetUniformLocation(program, uniform));
-        if (uniformAddress < 0) {
-            return 0;
-        }
-        uniformAddresses[uniform] = uniformAddress;
-        return uniformAddress;
-    }
+void ShaderProgram::setInt(const char* name, int value) {
+    auto location = glGetUniformLocation(program, name);
+    glUniform1i(location, value);
 }
 
-void ShaderProgram::use() {
-    glUseProgram(program);
+void ShaderProgram::setFloat(const char* name, float value) {
+    auto location = glGetUniformLocation(program, name);
+    glUniform1f(location, value);
 }
 
-void ShaderProgram::setValue(GLfloat value, const char* forUniform) {
-    auto uniformAddress = uniformIndex(forUniform);
-    if (!uniformAddress) {
-        return;
-    }
-    if (currentUniformFloatValues[forUniform] != value) {
-        glUniform1f(uniformAddress, value);
-        currentUniformFloatValues[forUniform] = value;
-    }
+void ShaderProgram::setFloatVec2(const char* name, int size, const GLfloat* value) {
+    auto location = glGetUniformLocation(program, name);
+    glUniform2fv(location, size, value);
 }
 
-void ShaderProgram::setValue(GLint value, const char* forUniform) {
-    auto uniformAddress = uniformIndex(forUniform);
-    if (!uniformAddress) {
-        return;
-    }
-    if (currentUniformIntValues[forUniform] != value) {
-        glUniform1i(uniformAddress, value);
-        currentUniformIntValues[forUniform] = value;
-    }
+void ShaderProgram::setFloatVec3(const char* name, int size, const GLfloat* value) {
+    auto location = glGetUniformLocation(program, name);
+    glUniform3fv(location, size, value);
 }
 
-void ShaderProgram::setValue(GLfloat* value, int size, const char* forUniform) {
-    if (!value) {
-        return;
-    }
-    auto uniformAddress = uniformIndex(forUniform);
-    if (!uniformAddress) {
-        return;
-    }
-    GLfloat* previousValue = currentUniformFloatArrayValues[forUniform];
-    if (previousValue == value) {
-        return;
-    }
-    if (size == 2) {
-        glUniform2fv(uniformAddress, 1, value);
-    } else if (size == 3) {
-        glUniform3fv(uniformAddress, 1, value);
-    } else if (size == 4) {
-        glUniform4fv(uniformAddress, 1, value);
-    }
-    currentUniformFloatArrayValues[forUniform] = value;
+void ShaderProgram::setFloatVec4(const char* name, int size, const GLfloat* value) {
+    auto location = glGetUniformLocation(program, name);
+    glUniform4fv(location, size, value);
 }
 
-void ShaderProgram::setMatrix(GLfloat* value, int size, const char* forUniform) {
-    if (!value) {
-        return;
-    }
-    if (size == 0) {
-        return;
-    }
-    auto uniformAddress = uniformIndex(forUniform);
-    if (!uniformAddress) {
-        return;
-    }
-    GLfloat* previousValue = currentUniformFloatArrayValues[forUniform];
-    if (previousValue == value) {
-        return;
-    }
-    if (size == 9) {
-        glUniformMatrix3fv(uniformAddress, 1, GL_FALSE, value);
-    } else if (size == 16) {
-        glUniformMatrix4fv(uniformAddress, 1, GL_FALSE, value);
-    }
-    currentUniformFloatArrayValues[forUniform] = value;
+void ShaderProgram::setUnifromMatrix3f(const char* name, int size, const GLfloat* matrix) {
+    auto location = glGetUniformLocation(program, name);
+    glUniformMatrix3fv(location, size, GL_FALSE, matrix);
+}
+
+void ShaderProgram::setUnifromMatrix4f(const char* name, int size, const GLfloat* matrix) {
+    auto location = glGetUniformLocation(program, name);
+    glUniformMatrix4fv(location, size, GL_FALSE, matrix);
 }

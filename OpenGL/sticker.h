@@ -17,10 +17,9 @@ public:
     ~Sticker();
     GLuint onDrawFrame(GLuint textureId);
 protected:
-    virtual void runOnDrawTasks(GLuint programId) override;
+    virtual void runOnDrawTasks() override;
     virtual void onDrawArrays() override;
 private:
-    ShaderProgram* shader;
     GLuint textureId;
     GLuint frameBufferId;
     int width;

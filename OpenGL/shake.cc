@@ -26,10 +26,11 @@ Shake::~Shake() {
 }
 
 GLuint Shake::onDrawFrame(int textureId) {
-    return processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+    processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+    return 0;
 }
 
-void Shake::runOnDrawTasks(GLuint programId) {
+void Shake::runOnDrawTasks() {
     progress = (float) frames / MAX_FRAMES;
     if (progress > 1) {
         progress = 0;
@@ -40,11 +41,8 @@ void Shake::runOnDrawTasks(GLuint programId) {
     }
     float scale = 1.0f + 0.2f * progress;
     glm::mat4 scaleMatrix = glm::scale(glm::vec3(scale, scale, 1.0f));
-    auto mvpMatrixUniform = glGetUniformLocation(programId, "mvpMatrix");
-    glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(scaleMatrix));
-    auto offsetUniform = glGetUniformLocation(programId, "textureCoordinateOffset");
-    printf("progress = %f\n", 0.01 * progress);
-    glUniform1f(offsetUniform, 0.01f * progress);
+    setUnifromMatrix4f("mvpMatrix", 1, glm::value_ptr(scaleMatrix));
+    setFloat("textureCoordinateOffset", 0.01f * progress);
 }
 
 void Shake::onDrawArrays() {

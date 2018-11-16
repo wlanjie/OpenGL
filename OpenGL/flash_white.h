@@ -9,9 +9,9 @@
 #ifndef flash_white_h
 #define flash_white_h
 
-#include "opengl.h"
+#include "frame_buffer.h"
 
-class FlashWhite : public OpenGL {
+class FlashWhite : public FrameBuffer {
 public:
     FlashWhite(int width, int height);
     ~FlashWhite();
@@ -19,8 +19,7 @@ public:
     GLuint onDrawFrame(GLuint textureId);
     
 protected:
-    virtual void runOnDrawTasks(GLuint programId) override;
-    virtual void onDrawArrays() override;
+    virtual void runOnDrawTasks() override;
     
 private:
     int frames;
