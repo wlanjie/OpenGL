@@ -27,6 +27,7 @@
 		70C7BB71219EE80C0079EB77 /* pixel_late.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C7BB6F219EE80C0079EB77 /* pixel_late.cc */; };
 		70EDF7B720BA6B4600EC9235 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70EDF7B620BA6B4600EC9235 /* OpenGL.framework */; };
 		70EDF7B920BA6E6900EC9235 /* libglfw.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70EDF7B820BA6E6900EC9235 /* libglfw.dylib */; };
+		70F178A022A94E58004CCCB2 /* image_process.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70F1789F22A94E57004CCCB2 /* image_process.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -98,6 +99,9 @@
 		70EDF7AB20BA68EA00EC9235 /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		70EDF7B620BA6B4600EC9235 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		70EDF7B820BA6E6900EC9235 /* libglfw.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.dylib; path = glfw/lib/libglfw.dylib; sourceTree = "<group>"; };
+		70F1789E22A94E57004CCCB2 /* image_process.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image_process.h; sourceTree = "<group>"; };
+		70F1789F22A94E57004CCCB2 /* image_process.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image_process.cc; sourceTree = "<group>"; };
+		70F178A122A951C1004CCCB2 /* action.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = action.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +157,8 @@
 		70EDF7AD20BA68EA00EC9235 /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				70F1789F22A94E57004CCCB2 /* image_process.cc */,
+				70F1789E22A94E57004CCCB2 /* image_process.h */,
 				7049889D2132D439002E1FDB /* filesystem.h */,
 				704988A22132D439002E1FDB /* main.cc */,
 				7049889E2132D439002E1FDB /* render_screen.cc */,
@@ -194,6 +200,7 @@
 				70C06FA422A9110C00058A58 /* fake_3d.h */,
 				70C06FAA22A9159900058A58 /* red_blue.cc */,
 				70C06FAB22A9159900058A58 /* red_blue.h */,
+				70F178A122A951C1004CCCB2 /* action.h */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -270,6 +277,7 @@
 				70C7BB57219D5FF00079EB77 /* glitch_filter.cc in Sources */,
 				70C06FA122A90C3100058A58 /* zoom_in_out.cc in Sources */,
 				70C7BB54219D5E5C0079EB77 /* blend.cc in Sources */,
+				70F178A022A94E58004CCCB2 /* image_process.cc in Sources */,
 				70C06FA522A9110C00058A58 /* fake_3d.cc in Sources */,
 				70C7BB4D219D105D0079EB77 /* shake.cc in Sources */,
 				70C06F9922A8C14300058A58 /* soul_scale.cc in Sources */,

@@ -73,12 +73,12 @@ RedBlue::RedBlue(int width, int height) : FrameBuffer(width, height, "shader/red
     stbi_image_free(look_up_data);
 }
 
-void RedBlue::runOnDrawTasks() {
+void RedBlue::RunOnDrawTasks() {
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, lookup_texture_id_);
-    setInt("inputImageTextureLookup", 1);
+    SetInt("inputImageTextureLookup", 1);
     
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, textureId);
-    setInt("inputImageTextureLast", 2);
+    SetInt("inputImageTextureLast", 2);
 }

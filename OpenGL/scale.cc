@@ -27,7 +27,7 @@ Scale::~Scale() {
     
 }
 
-void Scale::runOnDrawTasks() {
+void Scale::RunOnDrawTasks() {
     if (frames <= MAX_FRAMES) {
         progress = frames * 1.0 / SKIP_FRAMES;
     } else {
@@ -37,7 +37,7 @@ void Scale::runOnDrawTasks() {
     scale = 1.0f + 0.3f * progress;
     glm::mat4 scaleMatrix = glm::scale(glm::vec3(scale, scale, scale));
     
-    setUnifromMatrix4f("mvpMatrix", 1, glm::value_ptr(scaleMatrix));
+    SetUnifromMatrix4f("mvpMatrix", 1, glm::value_ptr(scaleMatrix));
     if (maxScale) {
         frames--;
         if (frames < 0) {
@@ -52,11 +52,11 @@ void Scale::runOnDrawTasks() {
     }
 }
 
-void Scale::onDrawArrays() {
+void Scale::OnDrawArrays() {
     
 }
 
 GLuint Scale::onDrawFrame(GLuint textureId) {
-    processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+    ProcessImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
     return 0;
 }

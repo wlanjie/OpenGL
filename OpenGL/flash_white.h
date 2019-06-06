@@ -19,7 +19,7 @@ public:
     GLuint onDrawFrame(GLuint textureId);
     
 protected:
-    virtual void runOnDrawTasks() override;
+    virtual void RunOnDrawTasks() override;
     
 private:
     float flash_write[6];

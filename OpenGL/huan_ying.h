@@ -19,8 +19,8 @@ public:
     GLuint onDrawFrame(int textureId);
     
 protected:
-    virtual void runOnDrawTasks();
-    virtual void onDrawArrays();
+    virtual void RunOnDrawTasks();
+    virtual void OnDrawArrays();
     
 private:
     int width;

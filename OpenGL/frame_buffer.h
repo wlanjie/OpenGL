@@ -19,8 +19,8 @@ public:
     GLuint onDrawFrame(GLuint textureId);
     GLuint onDrawFrame(GLuint textureId, const GLfloat* vertexCoordinate, const GLfloat* textureCoordinate);
 protected:
-    virtual void runOnDrawTasks();
-    virtual void onDrawArrays();
+    virtual void RunOnDrawTasks();
+    virtual void OnDrawArrays();
 private:
     GLuint textureId;
     GLuint frameBufferId;

@@ -19,5 +19,5 @@ RenderScreen::~RenderScreen() {
 }
 
 void RenderScreen::draw(int textureId) {
-    processImage(textureId);
+    ProcessImage(textureId);
 }

@@ -34,8 +34,8 @@ ZoomInOut::ZoomInOut(int width, int height) : FrameBuffer(width, height, "shader
     this->height = height;
 }
 
-void ZoomInOut::runOnDrawTasks() {
+void ZoomInOut::RunOnDrawTasks() {
     float scale = scalePercent[scalePercentIndex % 16];
     scalePercentIndex++;
-    setFloat("scalePercent", scale);
+    SetFloat("scalePercent", scale);
 }

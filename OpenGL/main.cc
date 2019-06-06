@@ -62,7 +62,7 @@ int main() {
     glBindTexture(GL_TEXTURE_2D, 0);
     stbi_image_free(data);
     
-    RedBlue image(width, height);
+    Fake3D image(width, height);
     while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
         int frameBufferTextureId = image.onDrawFrame(textureId);

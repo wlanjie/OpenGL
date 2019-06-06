@@ -58,20 +58,20 @@ GlitchFilter::~GlitchFilter() {
     delete[] threshHoldSequence;
 }
 
-void GlitchFilter::runOnDrawTasks() {
+void GlitchFilter::RunOnDrawTasks() {
     frames++;
     if (frames > MAX_FRAMES) {
         frames = 0;
     }
-    setFloat("colorDrift", driftSequence[frames]);
-    setFloatVec2("scanLineJitter", 1, new float[2]{jitterSequence[frames], threshHoldSequence[frames]});
+    SetFloat("colorDrift", driftSequence[frames]);
+    SetFloatVec2("scanLineJitter", 1, new float[2]{jitterSequence[frames], threshHoldSequence[frames]});
 }
 
-void GlitchFilter::onDrawArrays() {
+void GlitchFilter::OnDrawArrays() {
     
 }
 
 GLuint GlitchFilter::onDrawFrame(GLuint textureId) {
-    processImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
+    ProcessImage(textureId, defaultVertexCoordinates, defaultTextureCoordinate);
     return 0;
 }

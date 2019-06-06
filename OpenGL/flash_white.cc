@@ -33,9 +33,9 @@ FlashWhite::~FlashWhite() {
     
 }
 
-void FlashWhite::runOnDrawTasks() {
+void FlashWhite::RunOnDrawTasks() {
     
-    setFloat("alphaTimeLine", flash_write[flash_write_index_ % 6]);
+    SetFloat("alphaTimeLine", flash_write[flash_write_index_ % 6]);
     flash_write_index_++;
     
 //    FrameBuffer::runOnDrawTasks();

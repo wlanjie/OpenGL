@@ -33,23 +33,23 @@ FrameBuffer::~FrameBuffer() {
     glDeleteFramebuffers(1, &frameBufferId);
 }
 
-void FrameBuffer::runOnDrawTasks() {
+void FrameBuffer::RunOnDrawTasks() {
 }
 
-void FrameBuffer::onDrawArrays() {
+void FrameBuffer::OnDrawArrays() {
     
 }
 
 GLuint FrameBuffer::onDrawFrame(GLuint textureId) {
     glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
-    processImage(textureId);
+    ProcessImage(textureId);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return this->textureId;
 }
 
 GLuint FrameBuffer::onDrawFrame(GLuint textureId, const GLfloat *vertexCoordinate, const GLfloat *textureCoordinate) {
     glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
-    processImage(textureId, vertexCoordinate, textureCoordinate);
+    ProcessImage(textureId, vertexCoordinate, textureCoordinate);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return this->textureId;
 }

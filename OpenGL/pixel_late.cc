@@ -23,8 +23,8 @@ PixelLate::~PixelLate() {
     
 }
 
-void PixelLate::runOnDrawTasks() {
-    FrameBuffer::runOnDrawTasks();
+void PixelLate::RunOnDrawTasks() {
+    FrameBuffer::RunOnDrawTasks();
     float singlePixelSpacing = 0;
     if (width != 0) {
         singlePixelSpacing = 1.0 / width;
@@ -37,12 +37,12 @@ void PixelLate::runOnDrawTasks() {
     } else {
 //        singlePixelSpacing = newValue;
     }
-    setFloat("fractionalWidthOfPixel", singlePixelSpacing);
-    setFloat("aspectRatio", height * 1.0f / width);
+    SetFloat("fractionalWidthOfPixel", singlePixelSpacing);
+    SetFloat("aspectRatio", height * 1.0f / width);
 //    setFloat("aspectRatio", width * 1.0f / height);
 }
 
-void PixelLate::onDrawArrays() {
+void PixelLate::OnDrawArrays() {
     
 }
 

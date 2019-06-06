@@ -35,8 +35,8 @@ Fake3D::Fake3D(int width, int height) : FrameBuffer(width, height, "shader/verte
     this->height = height;
 }
 
-void Fake3D::runOnDrawTasks() {
+void Fake3D::RunOnDrawTasks() {
     float scale = scalePercent[scalePercentIndex % 15];
     scalePercentIndex++;
-    setFloat("scale", scale);
+    SetFloat("scale", scale);
 }

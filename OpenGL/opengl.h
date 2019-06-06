@@ -19,27 +19,27 @@ public:
     OpenGL(int width, int height, const char* vertex, const char* fragment);
     ~OpenGL();
     void setOutput(int width, int height);
-    void setInt(const char* name, int value);
-    void setFloat(const char* name, float value);
-    void setFloatVec2(const char* name, int size, const GLfloat* value);
-    void setFloatVec3(const char* name, int size, const GLfloat* value);
-    void setFloatVec4(const char* name, int size, const GLfloat* value);
-    void setUnifromMatrix3f(const char* name, int size, const GLfloat* matrix);
-    void setUnifromMatrix4f(const char* name, int size, const GLfloat* matrix);
+    void SetInt(const char* name, int value);
+    void SetFloat(const char* name, float value);
+    void SetFloatVec2(const char* name, int size, const GLfloat* value);
+    void SetFloatVec3(const char* name, int size, const GLfloat* value);
+    void SetFloatVec4(const char* name, int size, const GLfloat* value);
+    void SetUnifromMatrix3f(const char* name, int size, const GLfloat* matrix);
+    void SetUnifromMatrix4f(const char* name, int size, const GLfloat* matrix);
 protected:
-    void processImage(GLuint textureId);
-    void processImage(GLuint textureId, const GLfloat* vertexCoordinate, const GLfloat* textureCoordinate);
-    virtual void runOnDrawTasks();
-    virtual void onDrawArrays();
+    void ProcessImage(GLuint textureId);
+    void ProcessImage(GLuint textureId, const GLfloat* vertexCoordinate, const GLfloat* textureCoordinate);
+    virtual void RunOnDrawTasks();
+    virtual void OnDrawArrays();
     
 private:
-    void createProgram(const char* vertex, const char* fragment);
-    void compileShader(const char* shaderString, GLuint shader);
-    void link();
+    void CreateProgram(const char* vertex, const char* fragment);
+    void CompileShader(const char* shaderString, GLuint shader);
+    void Link();
 private:
-    GLuint program;
-    int width;
-    int height;
+    GLuint program_;
+    int width_;
+    int height_;
 };
 
 #endif /* opengl_h */

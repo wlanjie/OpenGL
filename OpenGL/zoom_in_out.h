@@ -17,7 +17,7 @@ public:
     ZoomInOut(int width, int height);
     
 protected:
-    virtual void runOnDrawTasks();
+    virtual void RunOnDrawTasks();
     
 private:
     int width;

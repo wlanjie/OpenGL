@@ -34,20 +34,20 @@ Test::Test(int width, int height) : FrameBuffer(width, height, "shader/vertex_sh
     stbi_image_free(data);
 }
 
-void Test::runOnDrawTasks() {
+void Test::RunOnDrawTasks() {
    
 }
 
-void Test::onDrawArrays() {
+void Test::OnDrawArrays() {
     if (frames >= MAX_FRAMS) {
         frames = 0;
     }
-    setFloat("strength", frames * 1.0f / MAX_FRAMS);
+    SetFloat("strength", frames * 1.0f / MAX_FRAMS);
     frames++;
     
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, textureId);
-    setInt("maskTexture", 1);
+    SetInt("maskTexture", 1);
 }
 
 GLuint Test::onDrawFrame(int textureId) {

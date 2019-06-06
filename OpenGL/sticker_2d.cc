@@ -123,19 +123,19 @@ Sticker2D::~Sticker2D() {
     
 }
 
-void Sticker2D::runOnDrawTasks() {
+void Sticker2D::RunOnDrawTasks() {
     float color = colorDisx[colorDisxIndex % 9];
     colorDisxIndex++;
     
     float time = timeStamp[timeStampIndex % 90];
     timeStampIndex++;
     
-    setFloat("timeStamp", time);
-    setFloat("colorDis_X", color);
+    SetFloat("timeStamp", time);
+    SetFloat("colorDis_X", color);
     
 }
 
-void Sticker2D::onDrawArrays() {
+void Sticker2D::OnDrawArrays() {
     
 }
 

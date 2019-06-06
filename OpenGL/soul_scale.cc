@@ -76,22 +76,22 @@ SoulScale::~SoulScale() {
     
 }
 
-void SoulScale::runOnDrawTasks() {
+void SoulScale::RunOnDrawTasks() {
     float mixture = mixturePercent[mixturePercentIndex % 16];
     mixturePercentIndex++;
     
     float scale = scalePercent[scalePercentIndex % 16];
     scalePercentIndex++;
     
-    setFloat("mixturePercent", mixture);
-    setFloat("scalePercent", scale);
+    SetFloat("mixturePercent", mixture);
+    SetFloat("scalePercent", scale);
     
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, textureId);
-    setInt("inputImageTexture2", 1);
+    SetInt("inputImageTexture2", 1);
 }
 
-void SoulScale::onDrawArrays() {
+void SoulScale::OnDrawArrays() {
 
 }
 

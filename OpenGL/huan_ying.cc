@@ -39,15 +39,15 @@ HuanYing::~HuanYing() {
     
 }
 
-void HuanYing::runOnDrawTasks() {
-    FrameBuffer::runOnDrawTasks();
+void HuanYing::RunOnDrawTasks() {
+    FrameBuffer::RunOnDrawTasks();
     
 }
 
-void HuanYing::onDrawArrays() {
+void HuanYing::OnDrawArrays() {
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, textureId);
-    setInt("inputImageTexture2", 1);
+    SetInt("inputImageTexture2", 1);
 }
 
 GLuint HuanYing::onDrawFrame(int textureId) {
