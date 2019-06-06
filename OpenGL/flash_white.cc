@@ -20,6 +20,13 @@ FlashWhite::FlashWhite(int width, int height) : FrameBuffer(width, height, "shad
     progress = 0;
     frames = 0;
     setOutput(width, height);
+    flash_write[0] = 0.33;
+    flash_write[1] = 0.66;
+    flash_write[2] = 1.0;
+    flash_write[3] = 0.66;
+    flash_write[4] = 0.33;
+    flash_write[5] = 0.0;
+    flash_write_index_ = 0;
 }
 
 FlashWhite::~FlashWhite() {
@@ -27,23 +34,27 @@ FlashWhite::~FlashWhite() {
 }
 
 void FlashWhite::runOnDrawTasks() {
-    FrameBuffer::runOnDrawTasks();
-    if (frames <= MAX_FRAMES) {
-        progress = frames * 1.0f / MAX_FRAMES;
-    } else {
-        progress = 2.0f - frames * 1.0f / MAX_FRAMES;
-    }
-    progress = (float) frames / MAX_FRAMES;
-    if (progress > 1) {
-        progress = 0;
-    }
-    frames++;
-    if (frames > MAX_FRAMES) {
-        frames = 0;
-    }
-    float scale = 1.0f + 0.2f * progress;
-    glm::mat4 scaleMatrix = glm::scale(glm::vec3(scale, scale, 1.0f));
-    setFloat("exposureColor", progress);
+    
+    setFloat("alphaTimeLine", flash_write[flash_write_index_ % 6]);
+    flash_write_index_++;
+    
+//    FrameBuffer::runOnDrawTasks();
+//    if (frames <= MAX_FRAMES) {
+//        progress = frames * 1.0f / MAX_FRAMES;
+//    } else {
+//        progress = 2.0f - frames * 1.0f / MAX_FRAMES;
+//    }
+//    progress = (float) frames / MAX_FRAMES;
+//    if (progress > 1) {
+//        progress = 0;
+//    }
+//    frames++;
+//    if (frames > MAX_FRAMES) {
+//        frames = 0;
+//    }
+////    float scale = 1.0f + 0.2f * progress;
+////    glm::mat4 scaleMatrix = glm::scale(glm::vec3(scale, scale, 1.0f));
+//    setFloat("exposureColor", progress);
 }
 
 GLuint FlashWhite::onDrawFrame(GLuint textureId) {

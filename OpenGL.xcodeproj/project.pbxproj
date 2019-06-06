@@ -7,9 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		701E730422A8AE80007B005D /* huan_ying.cc in Sources */ = {isa = PBXBuildFile; fileRef = 701E730222A8AE80007B005D /* huan_ying.cc */; };
 		704988A72132D439002E1FDB /* render_screen.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7049889E2132D439002E1FDB /* render_screen.cc */; };
 		704988A82132D439002E1FDB /* stb_image.cc in Sources */ = {isa = PBXBuildFile; fileRef = 704988A02132D439002E1FDB /* stb_image.cc */; };
 		704988AA2132D439002E1FDB /* main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 704988A22132D439002E1FDB /* main.cc */; };
+		70C06F9922A8C14300058A58 /* soul_scale.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C06F9722A8C14300058A58 /* soul_scale.cc */; };
+		70C06F9E22A8FA3100058A58 /* sticker_2d.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C06F9C22A8FA3100058A58 /* sticker_2d.cc */; };
+		70C06FA122A90C3100058A58 /* zoom_in_out.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C06F9F22A90C3100058A58 /* zoom_in_out.cc */; };
+		70C06FA522A9110C00058A58 /* fake_3d.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C06FA322A9110C00058A58 /* fake_3d.cc */; };
+		70C06FAC22A9159900058A58 /* red_blue.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C06FAA22A9159900058A58 /* red_blue.cc */; };
 		70C7BB4A219C3B580079EB77 /* opengl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C7BB48219C3B580079EB77 /* opengl.cc */; };
 		70C7BB4D219D105D0079EB77 /* shake.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C7BB4B219D105D0079EB77 /* shake.cc */; };
 		70C7BB51219D5C650079EB77 /* flash_white.cc in Sources */ = {isa = PBXBuildFile; fileRef = 70C7BB4F219D5C650079EB77 /* flash_white.cc */; };
@@ -36,6 +42,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		701E730122A8AD96007B005D /* huanying.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = huanying.fs; sourceTree = "<group>"; };
+		701E730222A8AE80007B005D /* huan_ying.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = huan_ying.cc; sourceTree = "<group>"; };
+		701E730322A8AE80007B005D /* huan_ying.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = huan_ying.h; sourceTree = "<group>"; };
 		7049889D2132D439002E1FDB /* filesystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filesystem.h; sourceTree = "<group>"; };
 		7049889E2132D439002E1FDB /* render_screen.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_screen.cc; sourceTree = "<group>"; };
 		7049889F2132D439002E1FDB /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -44,6 +53,22 @@
 		704988A32132D439002E1FDB /* render_screen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_screen.h; sourceTree = "<group>"; };
 		704988A42132D439002E1FDB /* shader_program.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shader_program.h; sourceTree = "<group>"; };
 		704988A62132D439002E1FDB /* shader_program.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader_program.cc; sourceTree = "<group>"; };
+		70C06F9722A8C14300058A58 /* soul_scale.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = soul_scale.cc; sourceTree = "<group>"; };
+		70C06F9822A8C14300058A58 /* soul_scale.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soul_scale.h; sourceTree = "<group>"; };
+		70C06F9A22A8C20100058A58 /* soul_scale.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = soul_scale.fs; sourceTree = "<group>"; };
+		70C06F9B22A8FA0E00058A58 /* sticker_2d.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = sticker_2d.fs; sourceTree = "<group>"; };
+		70C06F9C22A8FA3100058A58 /* sticker_2d.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sticker_2d.cc; sourceTree = "<group>"; };
+		70C06F9D22A8FA3100058A58 /* sticker_2d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sticker_2d.h; sourceTree = "<group>"; };
+		70C06F9F22A90C3100058A58 /* zoom_in_out.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = zoom_in_out.cc; sourceTree = "<group>"; };
+		70C06FA022A90C3100058A58 /* zoom_in_out.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = zoom_in_out.h; sourceTree = "<group>"; };
+		70C06FA222A90C4400058A58 /* zoom_in_out.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = zoom_in_out.fs; sourceTree = "<group>"; };
+		70C06FA322A9110C00058A58 /* fake_3d.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = fake_3d.cc; sourceTree = "<group>"; };
+		70C06FA422A9110C00058A58 /* fake_3d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fake_3d.h; sourceTree = "<group>"; };
+		70C06FA722A9116400058A58 /* fake_3d.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = fake_3d.fs; sourceTree = "<group>"; };
+		70C06FA822A914E100058A58 /* red_blue.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = red_blue.fs; sourceTree = "<group>"; };
+		70C06FA922A9152C00058A58 /* red_blue.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = red_blue.vs; sourceTree = "<group>"; };
+		70C06FAA22A9159900058A58 /* red_blue.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = red_blue.cc; sourceTree = "<group>"; };
+		70C06FAB22A9159900058A58 /* red_blue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = red_blue.h; sourceTree = "<group>"; };
 		70C7BB48219C3B580079EB77 /* opengl.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = opengl.cc; sourceTree = "<group>"; };
 		70C7BB49219C3B580079EB77 /* opengl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opengl.h; sourceTree = "<group>"; };
 		70C7BB4B219D105D0079EB77 /* shake.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = shake.cc; sourceTree = "<group>"; };
@@ -91,11 +116,18 @@
 		70C7BB5F219E6B430079EB77 /* shader */ = {
 			isa = PBXGroup;
 			children = (
+				70C06FA722A9116400058A58 /* fake_3d.fs */,
+				701E730122A8AD96007B005D /* huanying.fs */,
 				70C7BB60219E6BE00079EB77 /* vertex_shader.vs */,
 				70C7BB61219E6C5C0079EB77 /* flash_white_fragment.fs */,
 				70C7BB62219E6F4D0079EB77 /* fragment_shader.fs */,
 				70C7BB6C219EB8990079EB77 /* test_fragment.fs */,
 				70C7BB6E219EE7490079EB77 /* pixel_late_fragment.fs */,
+				70C06F9A22A8C20100058A58 /* soul_scale.fs */,
+				70C06F9B22A8FA0E00058A58 /* sticker_2d.fs */,
+				70C06FA222A90C4400058A58 /* zoom_in_out.fs */,
+				70C06FA822A914E100058A58 /* red_blue.fs */,
+				70C06FA922A9152C00058A58 /* red_blue.vs */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -150,6 +182,18 @@
 				70C7BB6A219EB14B0079EB77 /* test.h */,
 				70C7BB6F219EE80C0079EB77 /* pixel_late.cc */,
 				70C7BB70219EE80C0079EB77 /* pixel_late.h */,
+				701E730222A8AE80007B005D /* huan_ying.cc */,
+				701E730322A8AE80007B005D /* huan_ying.h */,
+				70C06F9722A8C14300058A58 /* soul_scale.cc */,
+				70C06F9822A8C14300058A58 /* soul_scale.h */,
+				70C06F9C22A8FA3100058A58 /* sticker_2d.cc */,
+				70C06F9D22A8FA3100058A58 /* sticker_2d.h */,
+				70C06F9F22A90C3100058A58 /* zoom_in_out.cc */,
+				70C06FA022A90C3100058A58 /* zoom_in_out.h */,
+				70C06FA322A9110C00058A58 /* fake_3d.cc */,
+				70C06FA422A9110C00058A58 /* fake_3d.h */,
+				70C06FAA22A9159900058A58 /* red_blue.cc */,
+				70C06FAB22A9159900058A58 /* red_blue.h */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -222,14 +266,20 @@
 			files = (
 				70C7BB71219EE80C0079EB77 /* pixel_late.cc in Sources */,
 				704988AA2132D439002E1FDB /* main.cc in Sources */,
+				70C06F9E22A8FA3100058A58 /* sticker_2d.cc in Sources */,
 				70C7BB57219D5FF00079EB77 /* glitch_filter.cc in Sources */,
+				70C06FA122A90C3100058A58 /* zoom_in_out.cc in Sources */,
 				70C7BB54219D5E5C0079EB77 /* blend.cc in Sources */,
+				70C06FA522A9110C00058A58 /* fake_3d.cc in Sources */,
 				70C7BB4D219D105D0079EB77 /* shake.cc in Sources */,
+				70C06F9922A8C14300058A58 /* soul_scale.cc in Sources */,
+				70C06FAC22A9159900058A58 /* red_blue.cc in Sources */,
 				704988A72132D439002E1FDB /* render_screen.cc in Sources */,
 				70C7BB5A219D61610079EB77 /* scale.cc in Sources */,
 				70C7BB6B219EB14B0079EB77 /* test.cc in Sources */,
 				704988A82132D439002E1FDB /* stb_image.cc in Sources */,
 				70C7BB51219D5C650079EB77 /* flash_white.cc in Sources */,
+				701E730422A8AE80007B005D /* huan_ying.cc in Sources */,
 				70C7BB4A219C3B580079EB77 /* opengl.cc in Sources */,
 				70C7BB68219E907F0079EB77 /* frame_buffer.cc in Sources */,
 			);

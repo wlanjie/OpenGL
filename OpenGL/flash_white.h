@@ -22,6 +22,8 @@ protected:
     virtual void runOnDrawTasks() override;
     
 private:
+    float flash_write[6];
+    int flash_write_index_;
     int frames;
     float progress;
 };

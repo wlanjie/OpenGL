@@ -18,6 +18,12 @@
 #include "test.h"
 #include "pixel_late.h"
 //#include "scale_shader.h"
+#include "huan_ying.h"
+#include "soul_scale.h"
+#include "sticker_2d.h"
+#include "zoom_in_out.h"
+#include "fake_3d.h"
+#include "red_blue.h"
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
     if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -56,13 +62,13 @@ int main() {
     glBindTexture(GL_TEXTURE_2D, 0);
     stbi_image_free(data);
     
-    PixelLate image(width, height);
+    RedBlue image(width, height);
     while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
         int frameBufferTextureId = image.onDrawFrame(textureId);
         renderScreen.draw(frameBufferTextureId);
         glfwSwapBuffers(window);
-        usleep(20 * 1000);
+        usleep(30 * 1000);
     }
     glfwTerminate();
     return 0;
